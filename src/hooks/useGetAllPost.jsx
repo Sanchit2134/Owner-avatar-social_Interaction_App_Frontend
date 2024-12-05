@@ -8,10 +8,10 @@ const useGetAllPost = () => {
     useEffect(()=>{
         const fetchAllPost = async()=>{
             try {
-                const res = await axios.get('http://localhost:8000/api/v1/post/allpost', {withCredentials: true});
+                const res = await axios.get('http://localhost:8000/api/v1/post/all', {withCredentials: true});
                 if(res.data.success){
                     // console.log(res.data);
-                    dispatch(setPost(res.data.post));
+                    dispatch(setPost(res.data.posts));
                 }
             } catch (error) {
                 console.log(error);
@@ -22,3 +22,4 @@ const useGetAllPost = () => {
 }
 
 export default useGetAllPost
+

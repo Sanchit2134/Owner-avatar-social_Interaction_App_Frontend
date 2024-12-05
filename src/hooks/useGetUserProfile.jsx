@@ -16,6 +16,7 @@ const useGetUserProfile = (userId) => {
                 console.error(error);
             }
         };
+        fetchSuggestedUsers();
     },[userId])
 };
 

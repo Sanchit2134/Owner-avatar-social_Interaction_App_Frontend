@@ -21,7 +21,7 @@ const CommentDialog = ({ open, setOpen }) => {
             setComment(selectedPost?.comments)
         }
     },[selectedPost])
-
+ 
     const changeEventHandler = (e) => {
         const inputText = e.target.value
         if (inputText.trim()) {

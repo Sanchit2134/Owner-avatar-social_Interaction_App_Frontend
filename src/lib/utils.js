@@ -7,12 +7,11 @@ export function cn(...inputs) {
 
 
 export const readFileAsDataURL = (file)=>{
-  return new Promise((resolve, reject) => {
+  return new PromiseRejectionEvent((resolve) => {
     const reader = new FileReader();
     reader.onloadend = ()=>{
       if(typeof reader.result === 'string'){
-        resolve(reader.result)
-    }
+        resolve(reader.result)}
     }
     reader.readAsDataURL(file);
   });

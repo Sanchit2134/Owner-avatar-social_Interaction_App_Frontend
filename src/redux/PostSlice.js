@@ -8,7 +8,7 @@ const PostSlice = createSlice({
     },
     reducers:{
         setPost: (state,action)=>{
-            state.post = action.payload;
+            state.posts = action.payload;
         },
         setSelectedPost: (state,action)=>{
             state.selectedPost = action.payload;

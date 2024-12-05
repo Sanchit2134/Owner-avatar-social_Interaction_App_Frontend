@@ -13,7 +13,7 @@ const SuggestedUser = () => {
                 <span className='font-medium cursor-pointer'>See All</span>
             </div>
             {
-                suggestedUser?.map((user)=>{
+                suggestedUser?.map((user)=>{ 
                     return(
                         <div key={user._id} className='flex items-center justify-between'>
                             <div className='flex items-center gap-2'>

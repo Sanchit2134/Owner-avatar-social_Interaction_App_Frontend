@@ -14,23 +14,23 @@ import { Button } from './ui/button'
 
 
 const Sidebar = () => {
-  const [open, setOpen] = useState(false)
-  const navigate = useNavigate()
-  const { user } = useSelector(store => store.auth)
   const dispatch = useDispatch()
-  const {likeNotification} = useSelector(store=>store.rtn)
+  const navigate = useNavigate()
+  const [open, setOpen] = useState(false)
+  const { user } = useSelector(store => store.auth)
+  const {likeNotification} = useSelector(store=>store.realTimeNotification)
 
   const handleLogout = async () => {
     try {
       const res = await axios.get('http://localhost:8000/api/v1/user/logout', {
         withCredentials: true
       })
-      if (res.data.success) {
+      if (res.data.success) { 
         dispatch(setAuthUser(null))
         dispatch(setSelectedPost(null))
         dispatch(setPost([]))
         navigate('/login')
-        toast.success(res.data.message)
+        toast.success(res.data.message) 
       }
     } catch (error) {
       toast.error(error.response.data.message)

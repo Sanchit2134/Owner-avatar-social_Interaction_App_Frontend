@@ -23,7 +23,7 @@ const Signup = () => {
   const submitHandler = async (e) => {
     e.preventDefault()
     setLoading(true)
-    // console.log(input) //debugging
+    // console.log(input) 
     try {
       const res = await axios.post('http://localhost:8000/api/v1/user/register', input, {
         headers: {
@@ -31,7 +31,7 @@ const Signup = () => {
         },
         withCredentials: true
       });
-      if (res.data.suceess) {
+      if (res.data.success) {
         navigate('/')
         toast.success(res.data.message)
         setInput({
@@ -45,8 +45,9 @@ const Signup = () => {
     } catch (error) {
       console.log(error)
       toast.error(error.response.data.message)
-
-    }
+    }finally{
+      setLoading(false)}
+    
   }
   return (
     <div className='flex items-center w-screen h-screen justify-center'>
@@ -67,7 +68,8 @@ const Signup = () => {
         </div>
         <div>
           <label htmlFor="Email" className='font-medium'>Email</label> <br />
-          <Input type="email"
+          <Input 
+            type="email"
             name='email'
             value={input.email}
             onChange={changeEventHandler}
@@ -76,7 +78,8 @@ const Signup = () => {
         </div>
         <div>
           <label htmlFor="password" className='font-medium'>Password</label> <br />
-          <Input type="password"
+          <Input 
+            type="password"
             name='password'
             value={input.password}
             onChange={changeEventHandler}

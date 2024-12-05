@@ -18,6 +18,7 @@ const CreatePost = ({ open, setOpen }) => {
   const [imagePreview, setImagePreview] = useState('');
   const [loading, setLoading] = useState(false);
   const {user} = useSelector(store => store.auth);
+  const {posts} = useSelector(store => store.post);
 
   const dispatch = useDispatch();
 
@@ -44,10 +45,10 @@ const CreatePost = ({ open, setOpen }) => {
         },
         withCredentials: true
       });
-      console.log(res); //debugging
+      // console.log(res);
       if(res.data.success){
         // console.log(res.data.message); //debugging
-        dispatch(setPost([res.data.post, ...post]));  
+        dispatch(setPost([res.data.post, ...posts]));  
         toast.success(res.data.message);
         setOpen(false);
       }

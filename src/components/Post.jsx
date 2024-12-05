@@ -14,16 +14,18 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { setPost, setSelectedPost } from '@/redux/PostSlice';
 import { Badge } from './ui/badge';
-
+import photo from '../assets/photo.jpg';
+//useSelector hook is use to get the data from the store
+//useDispatch hook is use to dispatch the action(means it tells the store to update its state based on some event or user interaction.) to the store
 
 const Post = ({ post }) => {
   const [text, setText] = useState('')
   const [open, setOpen] = useState(false)
+  const [liked, setLiked] = useState(post.likes.includes(user?._id) || false);
+  const [postLike, setPostLike] = useState(post.likes.length);  
+  const [comment, setComment] = useState(post.comments);
   const { user } = useSelector(store => store.auth);
   const { posts } = useSelector(store => store.post);
-  const [liked, setLiked] = useState(post.likes.includes(user?._id) || false);
-  const [postLike, setPostLike] = useState(post.likes.length);
-  const [comment, setComment] = useState(post.comments);
   const dispatch = useDispatch();
 
   //Change event handler
@@ -103,7 +105,7 @@ const Post = ({ post }) => {
     } catch (error) {
       console.log(error);
     }
-  }
+  } 
 
   //bookmark handler
   const bookMarkHandler = async () =>{
@@ -124,8 +126,8 @@ const Post = ({ post }) => {
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-2'>
             <Avatar >
-              <AvatarImage className='w-6 h-6 rounded-full' src="https://github.com/shadcn.png" alt='profile_img' />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarImage className='w-6 h-6 rounded-full' src={photo} alt='profile_img' />
+              <AvatarFallback>CN</AvatarFallback> 
             </Avatar>
             <div className='flex items-center gap-3'>
             <h1>{post.author?.username}</h1>
@@ -150,7 +152,6 @@ const Post = ({ post }) => {
           className='rounded-sm my-2 w-full aspect-square object-cover'
           src={post.image}
           alt="post_img" />
-        <div className=''>
           <div className='flex items-center justify-between my-2'>
             <div className='flex items-center gap-3'>
               {
@@ -165,7 +166,6 @@ const Post = ({ post }) => {
             </div>
             <CiBookmark onClick={bookMarkHandler} className='cursor-pointer hover:text-gray-600' />
           </div>
-        </div>
         <span className='font-medium block mb-2'>{postLike} likes</span>
         <p>
           <span className='font-medium mr-2'>{post.author?.username}</span>
