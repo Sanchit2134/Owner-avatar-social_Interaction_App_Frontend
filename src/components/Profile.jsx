@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Button } from './ui/button'
 import { useSelector } from 'react-redux'
-import { Badge, Heart } from 'lucide-react'
+import { AtSign, Badge, Heart, MessageCircle } from 'lucide-react'
 
 const Profile = () => {
   const params = useParams()
@@ -25,7 +25,7 @@ const Profile = () => {
   return (
     <div className='flex max-w-5xl justify-center mx-auto pl-10'>
       <div className='flex flex-col gap-20 p-8'>
-        <div className='grid grid-col-2'>
+        <div className='grid grid-cols-2'>
           <section className='flex items-center justify-center'>
             <Avatar className='h-32 w-32'>
               <AvatarImage src='https://github.com/shadcn.png' alt='profile_img' />
@@ -63,28 +63,32 @@ const Profile = () => {
             </div>
             <div className='flex flex-col gap-1 '>
               <span className='font-semibold'>{userProfile?.bio || 'bio here...'}</span>
-              <Badge className='w-fit' variant='secondary'>{userProfile?.username}</Badge>
+              <Badge className='w-fit' variant='secondary'><AtSign />{userProfile?.username}</Badge>
             </div>
           </section>
         </div>
         <div className='border-t border-t-gray-400'>
           <div className='flex items-center justify-center gap-10 text-sm'>
-            <span className={`py-3 cursor-pointer ${activeTab === 'posts' ? 'font-bold' : ''}`} onClick={() => handleTabChange('post')}>Posts</span>
+            <span className={`py-3 cursor-pointer ${activeTab === 'posts' ? 'font-bold' : ''}`} onClick={() => handleTabChange('posts')}>Posts</span>
             <span className={`py-3 cursor-pointer ${activeTab === 'saved' ? 'font-bold' : ''}`} onClick={() => handleTabChange('saved')}>Saved</span>
             <span className='py-3 cursor-pointer'>Reels</span>
             <span className='py-3 cursor-pointer'>Tags</span>
           </div>
-          <div>
+          <div className='grid grid-cols-3 gap-1'>
             {
               displayPosts?.map((post) => {
                 return (
-                  <div className='relative cursor-pointer'>
+                  <div className='relative group cursor-pointer'>
                     <img src={post.image} alt="postImage" className='rounded-sm my-2 w-full aspect-square object-cover' />
-                    <div className='rounded flex items-center justify-center bg-black bg-opacity-50'>
-                      <div>
-                        <Button>
+                    <div className='absolute flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+                      <div className='flex items-center text-white space-x-4'>
+                        <Button className='flex items-center gap-2 hover:text-gray-300'>
                           <Heart />
                           <span>{post?.likes.length}</span>
+                        </Button>
+                        <Button className='flex items-center gap-2 hover:text-gray-300'>
+                          <MessageCircle />
+                          <span>{post?.comments.length}</span>
                         </Button>
                       </div>
                     </div>

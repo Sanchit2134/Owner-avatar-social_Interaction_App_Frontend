@@ -33,7 +33,7 @@ const App = ()=> {
       socketio.on('notification', (notification)=>{
         dispatch(setLikeNotification(notification));
       })
-
+      //clean up
       return ()=>{
         socketio.close();
         dispatch(setSocket(null));
