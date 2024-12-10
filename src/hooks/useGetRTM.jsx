@@ -13,7 +13,7 @@ const useGetRTM = () => {
         return ()=>{
             socket?.off('newMessage');
         }
-    },[])
+    },[messages, setMessages])
 }
 
 export default useGetRTM;

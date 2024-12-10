@@ -19,14 +19,14 @@ import photo from '../assets/photo.jpg';
 //useDispatch hook is use to dispatch the action(means it tells the store to update its state based on some event or user interaction.) to the store
 
 const Post = ({ post }) => {
+  const { user } = useSelector(store => store.auth);
+  const { posts } = useSelector(store => store.post);
+  const dispatch = useDispatch();
   const [text, setText] = useState('')
   const [open, setOpen] = useState(false)
   const [liked, setLiked] = useState(post.likes.includes(user?._id) || false);
   const [postLike, setPostLike] = useState(post.likes.length);  
   const [comment, setComment] = useState(post.comments);
-  const { user } = useSelector(store => store.auth);
-  const { posts } = useSelector(store => store.post);
-  const dispatch = useDispatch();
 
   //Change event handler
   const changeEventHandler = (e) => {

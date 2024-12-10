@@ -29,7 +29,7 @@ const App = ()=> {
       socketio.on('getOnlineUsers', (onlineUsers)=>{
         dispatch(setOnlineUsers(onlineUsers));
       })
-
+      //notification event
       socketio.on('notification', (notification)=>{
         dispatch(setLikeNotification(notification));
       })

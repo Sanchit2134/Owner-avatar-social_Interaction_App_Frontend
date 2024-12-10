@@ -9,7 +9,6 @@ const useGetAllPost = () => {
         const fetchAllPost = async()=>{
             try {
                 const token = localStorage.getItem('token');
-                // const res = await axios.get('http://localhost:8000/api/v1/post/all', {withCredentials: true});
                 const res = await axios.get('http://localhost:8000/api/v1/post/all', {
                     headers: {
                         Authorization: `Bearer ${token}`
