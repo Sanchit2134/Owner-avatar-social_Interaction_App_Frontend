@@ -32,24 +32,24 @@ const Message = ({ selectedUser }) => {
                                 <div className={`p-2 rounded-lg max-w-xs ${msg.senderId === user?._id ? 'bg-blue-500 text-white' : 'bg-gray-400 text-black'}`}>
                                     {msg.messages}
                                 </div>
-                                {/* {
+                                {
                                     msg.senderId === user?._id && (
                                         <Popover>
                                         <PopoverTrigger asChild>
-                                          <Button size='icon' className='rounded-full h-5 w-5 bg-red-500 hover:bg-red-500 absolute bottom-6 left-6'>{likeNotification.length}</Button>
+                                          <Button size='icon' className='rounded-full h-5 w-5 bg-red-500 hover:bg-red-500 absolute bottom-6 left-6'>{messages.length}</Button>
                                         </PopoverTrigger>
                                         <PopoverContent>
                                           <div>
                                             {
-                                              likeNotification.length === 0 ? (<p>No new notification</p>) : (
-                                                likeNotification.map((notification) => {
+                                              messages.length === 0 ? (<p>No new notification</p>) : (
+                                                messages.map((msg) => {
                                                   return (
-                                                    <div key={notification.userId} className='flex items-center gap-2 my-2 '>
+                                                    <div key={msg.userId} className='flex items-center gap-2 my-2 '>
                                                       <Avatar>
-                                                        <AvatarImage src={notification.userDetail?.profilePicture} />
+                                                        <AvatarImage src={messages.userDetail?.profilePicture} />
                                                         <AvatarFallback>CN</AvatarFallback>
                                                       </Avatar>
-                                                      <p className='text-sm'><span className='font-bold'>{notification.userDetail?.username} liked your post</span></p>
+                                                      <p className='text-sm'><span className='font-bold'>{msg.userDetail?.username} liked your post</span></p>
                                                     </div>
                                                   )
                                                 })
@@ -59,7 +59,7 @@ const Message = ({ selectedUser }) => {
                                         </PopoverContent>
                                       </Popover>
                                     )
-                                } */}
+                                }
                             </div>
                         )
                     })

@@ -28,7 +28,7 @@ const Profile = () => {
         <div className='grid grid-cols-2'>
           <section className='flex items-center justify-center'>
             <Avatar className='h-32 w-32'>
-              <AvatarImage src='https://github.com/shadcn.png' alt='profile_img' />
+              <AvatarImage src={userProfile?.profilePicture} alt='profile_img' />
               <AvatarFallback>JD</AvatarFallback>
             </Avatar>
           </section>

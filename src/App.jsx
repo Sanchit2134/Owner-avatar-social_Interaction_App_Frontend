@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setOnlineUsers } from './redux/chatSlice'
 import { setSocket } from './redux/SocketSlice'
 import { setLikeNotification } from './redux/RTNSlice'
+import ProtectedRoute from './components/ProtectedRoute'
 
 const App = ()=> {
   const {user} = useSelector(store=>store.auth);
@@ -49,12 +50,12 @@ const App = ()=> {
       <div>
         <Router>
           <Routes>
-          <Route path='/' element={<Home/>}/>
-            <Route path='/signup' element={<Signup/>}/>
-            <Route path='/login' element={<Login/>}/>
-            <Route path='/profile/:id' element={<Profile/>}/>
-            <Route path='/account/edit' element={<EditProfile/>}/>
-            <Route path='/chat' element={<ChatPage/>}/>
+          <Route path='/' element={<ProtectedRoute><Home/></ProtectedRoute>}/>
+            <Route path='/signup' element={<ProtectedRoute><Signup/></ProtectedRoute>}/>
+            <Route path='/login' element={<ProtectedRoute><Login/></ProtectedRoute>}/>
+            <Route path='/profile/:id' element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
+            <Route path='/account/edit' element={<ProtectedRoute><EditProfile/></ProtectedRoute>}/>
+            <Route path='/chat' element={<ProtectedRoute><ChatPage/></ProtectedRoute>}/>
 
           </Routes>
         </Router>

@@ -91,7 +91,7 @@ const Login = () => {
             :
             (<Button type='submit'>Login</Button>)
         }
-        <span className='text-center'>Doen't have an account? <Link to='/signup' className='text-blue-600'>Sign up</Link> </span>
+        <span className='text-center'>Doesn't have an account? <Link to='/signup' className='text-blue-600'>Sign up</Link> </span>
       </form>
     </div>
   )
