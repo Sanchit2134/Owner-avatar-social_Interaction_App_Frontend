@@ -3,63 +3,88 @@ import ChatPage from './components/ChatPage'
 import EditProfile from './components/EditProfile'
 import Home from './components/Home'
 import Login from './components/Login'
+import MainLayout from './components/MainLayout'
 import Profile from './components/Profile'
 import Signup from './components/Signup'
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import {io} from 'socket.io-client' 
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { io } from "socket.io-client";
 import { useDispatch, useSelector } from 'react-redux'
-import { setOnlineUsers } from './redux/chatSlice'
 import { setSocket } from './redux/SocketSlice'
+import { setOnlineUsers } from './redux/chatSlice'
 import { setLikeNotification } from './redux/RTNSlice'
-import ProtectedRoute from './components/ProtectedRoute'
+import ProtectedRoutes from './components/ProtectedRoute'
 
-const App = ()=> {
-  const {user} = useSelector(store=>store.auth);
-  const {socket} = useSelector(store=>store.socketio);
+
+const browserRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <ProtectedRoutes><MainLayout /></ProtectedRoutes>,
+    children: [
+      {
+        path: '/',
+        element: <ProtectedRoutes><Home /></ProtectedRoutes>
+      },
+      {
+        path: '/profile/:id',
+        element: <ProtectedRoutes> <Profile /></ProtectedRoutes>
+      },
+      {
+        path: '/account/edit',
+        element: <ProtectedRoutes><EditProfile /></ProtectedRoutes>
+      },
+      {
+        path: '/chat',
+        element: <ProtectedRoutes><ChatPage /></ProtectedRoutes>
+      },
+    ]
+  },
+  {
+    path: '/login',
+    element: <Login />
+  },
+  {
+    path: '/signup',
+    element: <Signup />
+  },
+])
+
+function App() {
+  const { user } = useSelector(store => store.auth);
+  const { socket } = useSelector(store => store.socketio);
   const dispatch = useDispatch();
-  useEffect(()=>{
-    if(user){
-      const socketio = io('http://localhost:8000',{
-        query:{
+
+  useEffect(() => {
+    if (user) {
+      const socketio = io('http://localhost:8000', {
+        query: {
           userId: user?._id
         },
-        transports:['websocket'] // to avoid unnecessary api calls
+        transports: ['websocket']
+      });
+      dispatch(setSocket(socketio));
+
+      // listen all the events
+      socketio.on('getOnlineUsers', (onlineUsers) => {
+        dispatch(setOnlineUsers(onlineUsers));
       });
 
-      //listen all the events
-      socketio.on('getOnlineUsers', (onlineUsers)=>{
-        dispatch(setOnlineUsers(onlineUsers));
-      })
-      //notification event
-      socketio.on('notification', (notification)=>{
+      socketio.on('notification', (notification) => {
         dispatch(setLikeNotification(notification));
-      })
-      //clean up
-      return ()=>{
+      });
+
+      return () => {
         socketio.close();
         dispatch(setSocket(null));
       }
-    }
-    else if(socket){
+    } else if (socket) {
       socket.close();
-        dispatch(setSocket(null));
+      dispatch(setSocket(null));
     }
-}, [user,dispatch])
+  }, [user, dispatch]);
+
   return (
     <>
-      <div>
-        <Router>
-          <Routes>
-          <Route path='/' element={<ProtectedRoute><Home/></ProtectedRoute>}/>
-            <Route path='/signup' element={<ProtectedRoute><Signup/></ProtectedRoute>}/>
-            <Route path='/login' element={<ProtectedRoute><Login/></ProtectedRoute>}/>
-            <Route path='/profile/:id' element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
-            <Route path='/account/edit' element={<ProtectedRoute><EditProfile/></ProtectedRoute>}/>
-            <Route path='/chat' element={<ProtectedRoute><ChatPage/></ProtectedRoute>}/>
-
-          </Routes>
-        </Router>
-      </div>
+      <RouterProvider router={browserRouter} />
     </>
   )
 }

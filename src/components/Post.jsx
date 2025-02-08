@@ -108,16 +108,16 @@ const Post = ({ post }) => {
   } 
 
   //bookmark handler
-  const bookMarkHandler = async () =>{
+  const bookmarkHandler = async () => {
     try {
-      const res = await axios.get(`http://localhost:8000/api/v1/post/${post?._id}/bookmark`, {withCredentials:true});
-      if(res.data.success){
-        toast.success(res.data.message);
-      }
+        const res = await axios.get(`http://localhost:8000/api/v1/post/${post?._id}/bookmark`, {withCredentials:true});
+        if(res.data.success){
+            toast.success(res.data.message);
+        }
     } catch (error) {
-      console.log(error);
+        console.log(error);
     }
-  }
+}
 
 
   return (
@@ -164,7 +164,7 @@ const Post = ({ post }) => {
                 className='cursor-pointer hover:text-gray-600' />
               <IoIosSend className='cursor-pointer hover:text-gray-600' />
             </div>
-            <CiBookmark onClick={bookMarkHandler} className='cursor-pointer hover:text-gray-600' />
+            <CiBookmark onClick={bookmarkHandler} className='cursor-pointer hover:text-gray-600' />
           </div>
         <span className='font-medium block mb-2'>{postLike} likes</span>
         <p>
